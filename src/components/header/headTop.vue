@@ -42,12 +42,12 @@ export default {
     this.getUserInfo();
   },
   props: ["signinUp", "headTitle", "goBack"],
-//   computed: {
-//     ...mapState(["userInfo"]),
-//   },
-//   methods: {
-//     ...mapActions(["getUserInfo"]),
-//   },
+  computed: {
+    ...mapState(["userInfo"]),
+  },
+  methods: {
+    ...mapActions(["getUserInfo"]),
+  },
 };
 </script>
 

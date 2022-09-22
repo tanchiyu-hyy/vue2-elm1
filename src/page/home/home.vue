@@ -97,10 +97,10 @@ export default {
   },
   mounted() {
     // 获取当前城市
-    // cityGuess().then((res) => {
-    //   this.guessCity = res.name;
-    //   this.guessCityid = res.id;
-    // });
+    getCity('guess').then((res) => {
+      this.guessCity = res.data.name;
+      this.guessCityid = res.data.id;
+    });
 
     //获取热门城市
     getCity("hot").then((res) => {

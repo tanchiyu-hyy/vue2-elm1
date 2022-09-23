@@ -29,6 +29,7 @@ import {
   ADD_ADDRESS,
   BUY_CART,
 } from "./mutation-types.js";
+import {setStore, getStore} from '../config/mUtils'
 
 export default {
   //获取用户信息存入vuex
@@ -44,5 +45,11 @@ export default {
     } else {
       state.userInfo = null;
     }
+  },
+  // 记录用户信息
+  [RECORD_USERINFO](state, info) {
+    state.userInfo = info;
+    state.login = true;
+    setStore("user_id", info.user_id);
   },
 };

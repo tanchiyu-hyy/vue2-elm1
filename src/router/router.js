@@ -3,6 +3,7 @@ import Router from "vue-router";
 
 import home from "@/page/home/home";
 import Login from "@/page/login/Login";
+import city from "@/page/city/city";
 // const home = r => require.ensure([], () => r(require('../page/home/home')), 'home')
 
 // Vue.use(Router);
@@ -25,6 +26,11 @@ export default [
         path: "/login",
         component: Login,
       },
+      //当前选择城市页
+      {
+        path: '/city/:cityid',
+        component: city
+    },
     ],
   },
 ];

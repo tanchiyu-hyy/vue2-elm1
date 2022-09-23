@@ -17,6 +17,7 @@
       <span class="title_text">{{headTitle}}</span>
     </section>
     <slot name="changeLogin"></slot>
+    <slot name="changecity"></slot>
   </header>
 </template>
 

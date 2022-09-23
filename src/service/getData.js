@@ -33,6 +33,7 @@ export async function getcaptchas() {
     }));
 }
 
+// 账号密码登录
 export async function accountLogin(username, password, captcha_code) {
   return http
     .post(`/v2/login`, { username, password, captcha_code })
@@ -41,4 +42,22 @@ export async function accountLogin(username, password, captcha_code) {
       status: response.status,
       data: response.data,
     }));
+}
+
+// 获取搜索地址
+export async function searchplace(city_id, keyword) {
+  return http
+    .get(`/v1/pois`, {
+      params: { type: "search", city_id, keyword },
+    })
+    .then(({ status, data }) => ({ status, data }))
+    .catch(({ response }) => ({
+      status: response.status,
+      data: response.data,
+    }));
+}
+
+// 获取当前所在城市
+export async function currentcity(number) {
+  return http.get(`/v1/cities/${number}`);
 }

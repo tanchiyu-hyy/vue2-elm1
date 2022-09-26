@@ -4,6 +4,7 @@ import Router from "vue-router";
 import home from "@/page/home/home";
 import Login from "@/page/login/Login";
 import city from "@/page/city/city";
+import profile from "@/page/profile/profile";
 // const home = r => require.ensure([], () => r(require('../page/home/home')), 'home')
 
 // Vue.use(Router);
@@ -28,9 +29,14 @@ export default [
       },
       //当前选择城市页
       {
-        path: '/city/:cityid',
-        component: city
-    },
+        path: "/city/:cityid",
+        component: city,
+      },
+      //个人信息页
+      {
+        path: "/profile",
+        component: profile,
+      },
     ],
   },
 ];

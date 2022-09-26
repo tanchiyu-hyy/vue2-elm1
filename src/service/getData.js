@@ -61,3 +61,14 @@ export async function searchplace(city_id, keyword) {
 export async function currentcity(number) {
   return http.get(`/v1/cities/${number}`);
 }
+
+// 获取msite页面食品分类列表
+export async function msiteFoodTypes(geohash) {
+  return http.get(`/v2/index_entry`, {
+    params: {
+      geohash,
+      group_type: "1",
+      "flags[]": "F",
+    },
+  });
+}

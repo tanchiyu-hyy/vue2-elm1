@@ -178,7 +178,6 @@
     },
     mounted() {
       this.initData();
-      console.log(11);
     },
     mixins: [getImgPath],
     watch: {

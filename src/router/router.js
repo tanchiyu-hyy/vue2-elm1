@@ -5,8 +5,7 @@ import home from "@/page/home/home";
 import Login from "@/page/login/Login";
 import city from "@/page/city/city";
 import profile from "@/page/profile/profile";
-// const home = r => require.ensure([], () => r(require('../page/home/home')), 'home')
-
+import msite from "@/page/msite/msite";
 // Vue.use(Router);
 
 export default [
@@ -14,6 +13,12 @@ export default [
     path: "/",
     component: App, //顶层路由，对应index.html
     children: [
+      //所有商铺列表页
+      {
+        path: "/msite",
+        component: msite,
+        meta: { keepAlive: true },
+      },
       {
         path: "",
         redirect: "/home",

@@ -21,27 +21,43 @@
       </div>
       <img src="../../images/fl.svg" class="fl_back animation_opactiy" v-else>
     </nav>
+    <div class="shop_list_container">
+      <header class="shop_header">
+        <svg class="shop_icon">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#shop"></use>
+        </svg>
+        <span class="shop_header_title">附近商家</span>
+      </header>
+      <ShopList v-if="hasGetData" :geohash="geohash"></ShopList>
+    </div>
+    <FootGuide></FootGuide>
   </div>
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
+  import ShopList from 'src/components/common/shoplist'
   import HeadTop from 'src/components/header/headTop'
-  import { msiteAddress, msiteFoodTypes, cityGuess } from 'src/service/getData'
+  import FootGuide from 'src/components/footer/footGuide'
+  import { msiteAddress, msiteFoodTypes, getCity } from 'src/service/getData'
   import 'src/plugins/swiper.min.js'
   import 'src/style/swiper.min.css'
   export default {
     data() {
       return {
+        imgBaseUrl: 'https://fuss10.elemecdn.com', //图片域名地址
         geohash: '', // city页面传递过来的地址geohash
         foodTypes: [], // 食品分类列表
         msiteTitle: '请选择地址...', // msite页面头部标题
       }
     },
     methods: {
+      ...mapMutations([
+        'RECORD_ADDRESS', 'SAVE_GEOHASH'
+      ]),
       // 解码url地址，求去restaurant_category_id值
       getCategoryId(url) {
         let urlData = decodeURIComponent(url.split('=')[1].replace('&target_name', ''));
-        console.log(urlData);
         if (/restaurant_category_id/gi.test(urlData)) {
           return JSON.parse(urlData).restaurant_category_id.id
         } else {
@@ -69,15 +85,67 @@
     },
     components: {
       HeadTop,
+      FootGuide,
+      ShopList
+    },
+    async beforeMount() {
+      if (!this.$route.query.geohash) {
+        // 获取首页默认地址
+        const res = await getCity('guess');
+        const address = res.data;
+        this.geohash = address.latitude + ',' + address.longitude;
+      } else {
+        this.geohash = this.$route.query.geohash
+      }
+      //获取位置信息
+      let res = await msiteAddress(this.geohash);
+      this.msiteTitle = res.data.name;
+      //保存geohash 到vuex
+      this.SAVE_GEOHASH(this.geohash);
+      this.RECORD_ADDRESS(res.data);
+
+      this.hasGetData = true;
     }
   }
 </script>
 
 <style lang="scss" scoped>
   @import "src/style/mixin";
+  .shop_list_container {
+    margin-top: 0.4rem;
+    border-top: 0.025rem solid $bc;
+    background-color: #fff;
+    .shop_header {
+      .shop_icon {
+        fill: #999;
+        margin-left: 0.6rem;
+        vertical-align: middle;
+        @include wh(0.6rem, 0.6rem);
+      }
+      .shop_header_title {
+        color: #999;
+        @include font(0.55rem, 1.6rem);
+      }
+    }
+  }
   .food_types_container {
     display: flex;
     flex-wrap: wrap;
+    .link_to_food {
+      width: 25%;
+      padding: 0.3rem 0rem;
+      @include fj(center);
+      figure {
+        img {
+          margin-bottom: 0.3rem;
+          @include wh(1.8rem, 1.8rem);
+        }
+        figcaption {
+          text-align: center;
+          @include sc(0.55rem, #666);
+        }
+      }
+    }
   }
   .msite_nav {
     padding-top: 2.1rem;

@@ -72,3 +72,8 @@ export async function msiteFoodTypes(geohash) {
     },
   });
 }
+
+// 获取msite页面地址信息
+export async function msiteAddress(geohash) {
+  return http.get(`/v2/pois/${geohash}`);
+}

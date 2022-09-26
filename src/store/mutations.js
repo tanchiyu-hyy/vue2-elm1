@@ -29,7 +29,7 @@ import {
   ADD_ADDRESS,
   BUY_CART,
 } from "./mutation-types.js";
-import {setStore, getStore} from '../config/mUtils'
+import { setStore, getStore } from "../config/mUtils";
 
 export default {
   //获取用户信息存入vuex
@@ -51,5 +51,14 @@ export default {
     state.userInfo = info;
     state.login = true;
     setStore("user_id", info.user_id);
+  },
+  //保存geohash
+  [SAVE_GEOHASH](state, geohash) {
+    state.geohash = geohash;
+  },
+  // 记录当前经度纬度
+  [RECORD_ADDRESS](state, { latitude, longitude }) {
+    state.latitude = latitude;
+    state.longitude = longitude;
   },
 };

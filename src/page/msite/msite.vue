@@ -49,6 +49,7 @@
         geohash: '', // city页面传递过来的地址geohash
         foodTypes: [], // 食品分类列表
         msiteTitle: '请选择地址...', // msite页面头部标题
+        hasGetData: false, //是否已经获取地理位置数据，成功之后再获取商铺列表信息
       }
     },
     methods: {
